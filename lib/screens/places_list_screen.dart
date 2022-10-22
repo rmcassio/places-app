@@ -22,23 +22,30 @@ class PlacesListScreen extends StatelessWidget {
         ],
       ),
       body: Center(
-        child: Consumer<GreatPlaces>(
-          child: const Center(child: Text('Nenhum local cadastrado.')),
-          builder: (context, greatPlaces, child) => greatPlaces.itemsCount == 0
-              ? child!
-              : ListView.builder(
-                  itemBuilder: (context, index) => ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: FileImage(
-                        greatPlaces.itemByIndex(index: index).image,
-                      ),
-                    ),
-                    title: Text(
-                      greatPlaces.itemByIndex(index: index).title,
-                    ),
-                    onTap: () {},
-                  ),
-                  itemCount: greatPlaces.itemsCount,
+        child: FutureBuilder(
+          future: Provider.of<GreatPlaces>(context, listen: false).loadPlaces(),
+          builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Consumer<GreatPlaces>(
+                  child: const Center(child: Text('Nenhum local cadastrado.')),
+                  builder: (context, greatPlaces, child) => greatPlaces.itemsCount == 0
+                      ? child!
+                      : ListView.builder(
+                          itemBuilder: (context, index) => ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: FileImage(
+                                greatPlaces.itemByIndex(index: index).image,
+                              ),
+                            ),
+                            title: Text(
+                              greatPlaces.itemByIndex(index: index).title,
+                            ),
+                            onTap: () {},
+                          ),
+                          itemCount: greatPlaces.itemsCount,
+                        ),
                 ),
         ),
       ),
