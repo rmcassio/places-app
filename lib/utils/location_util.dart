@@ -1,5 +1,4 @@
 const GOOGLE_API_KEY = 'AIzaSyAS3YE2WmpAtQ2w21crjf-7KahcLEBoTd0';
-const SECRET_KEY = 'HD_NBfyFX9Vh4VlkdeM3Ttpmtnk=';
 
 class LocationUtil {
   static String generateLocationPreviewImage({
