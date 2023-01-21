@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:places_app/providers/grate_places.dart';
 import 'package:places_app/utils/app_routes.dart';
 import 'package:places_app/widgets/image_input.dart';
+import 'package:places_app/widgets/location_input.dart';
 import 'package:provider/provider.dart';
 
 class PlaceFormScreen extends StatefulWidget {
@@ -56,6 +57,8 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                     ImageInput(
                       onSelectImage: _selectImage,
                     ),
+                    const SizedBox(height: 10),
+                    const LocationInput(),
                   ],
                 ),
               ),
