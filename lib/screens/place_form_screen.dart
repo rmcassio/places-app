@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_app/providers/grate_places.dart';
 import 'package:places_app/utils/app_routes.dart';
 import 'package:places_app/widgets/image_input.dart';
@@ -17,17 +18,26 @@ class PlaceFormScreen extends StatefulWidget {
 class _PlaceFormScreenState extends State<PlaceFormScreen> {
   final _titleController = TextEditingController();
   File? _pickedImage;
+  LatLng? _pickedPosition;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
+  void _selectPosition(LatLng position) {
+    _pickedPosition = position;
+  }
+
   void _submitForm() {
-    if (_titleController.text.isEmpty || _pickedImage == null) {
+    if (_titleController.text.isEmpty || _pickedImage == null || _pickedPosition == null) {
       return;
     }
 
-    Provider.of<GreatPlaces>(context, listen: false).addPlace(_titleController.text, _pickedImage!);
+    Provider.of<GreatPlaces>(context, listen: false).addPlace(
+      _titleController.text,
+      _pickedImage!,
+      _pickedPosition!,
+    );
 
     Navigator.of(context).popAndPushNamed(AppRoutes.PLACE_LIST);
   }
@@ -58,7 +68,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                       onSelectImage: _selectImage,
                     ),
                     const SizedBox(height: 10),
-                    const LocationInput(),
+                    LocationInput(onSelectPosition: _selectPosition),
                   ],
                 ),
               ),

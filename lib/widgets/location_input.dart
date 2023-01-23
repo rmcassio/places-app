@@ -5,7 +5,8 @@ import 'package:places_app/screens/map_screen.dart';
 import 'package:places_app/utils/location_util.dart';
 
 class LocationInput extends StatefulWidget {
-  const LocationInput({super.key});
+  final Function onSelectPosition;
+  const LocationInput({super.key, required this.onSelectPosition});
 
   @override
   State<LocationInput> createState() => _LocationInputState();
@@ -34,6 +35,8 @@ class _LocationInputState extends State<LocationInput> {
     ));
 
     if (selectedLocation == null) return;
+
+    widget.onSelectPosition(selectedLocation);
   }
 
   @override
